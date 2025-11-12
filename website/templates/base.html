@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} Smart Notes {% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header> </header>
+<body class="flex flex-col min-h-screen">
+    <header> {% include 'components/navbar.html' %} </header>
 
-    <main>
+    <main class="flex-grow">
         {% block content %}
             
         {% endblock %}
     </main>
 
-    <footer> </footer>
+    <footer> {% include 'components/footer.html' %} </footer>
 </body>
 </html>
