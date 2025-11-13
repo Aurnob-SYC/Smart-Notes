@@ -78,10 +78,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
         'NAME': 'smart_notes_db',
-        'USER': 'root',                   # your MySQL username
-        'PASSWORD': 'samin',           # your MySQL password
-        'HOST': 'localhost',                   # or IP, e.g. 127.0.0.1
-        'PORT': '3306',                        # default MySQL port
+        'USER': 'root',                   
+        'PASSWORD': 'samin',           
+        'HOST': 'localhost',                   
+        'PORT': '3306',                        
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },

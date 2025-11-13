@@ -2,4 +2,11 @@
 
 {% block content %}
     <h1>About Page</h1>
+    {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }}!</p>
+  <a href="{% url 'logout' %}">Logout</a> 
+{% else %}
+  <p>You are not logged in.</p>
+  <a href="#" onclick="toggleModal('loginModal')">Login</a>
+{% endif %}
 {% endblock %}
