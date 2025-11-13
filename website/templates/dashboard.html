@@ -1,0 +1,45 @@
+<!-- templates/dashboard.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="flex h-screen bg-gray-100">
+
+  <!-- Left Sidebar -->
+  <div class="w-64 bg-white shadow-md flex flex-col">
+    <!-- User profile -->
+    <div class="flex flex-col items-center mt-6 mb-4">
+      <img src="{% static 'images/profile_img.png' %}" alt="User Image" class="w-20 h-20 rounded-full">
+      <h2 class="mt-2 font-semibold">{{ user.username }}</h2>
+    </div>
+
+    <!-- Feature Buttons -->
+    <nav class="flex-1 px-4 space-y-2">
+      <button class="w-full text-left px-4 py-2 rounded hover:bg-gray-200" onclick="showFeature('notes')">Notes</button>
+      <button class="w-full text-left px-4 py-2 rounded hover:bg-gray-200" onclick="showFeature('summarizer')">Summarizer</button>
+      <button class="w-full text-left px-4 py-2 rounded hover:bg-gray-200" onclick="showFeature('calendar')">Calendar</button>
+      <button class="w-full text-left px-4 py-2 rounded hover:bg-gray-200" onclick="showFeature('ai_writer')">AI Writer</button>
+    </nav>
+  </div>
+
+  <!-- Right Content Area -->
+  <div class="flex-1 p-6 overflow-auto" id="feature-content">
+    <h1 class="text-2xl font-bold mb-4">Welcome to your dashboard, {{ user.username }}!</h1>
+    <p>Select a feature from the left panel to start.</p>
+  </div>
+</div>
+
+<script>
+function showFeature(feature) {
+    let url = '';
+    if (feature === 'notes') url = "{% url 'notes' %}";
+
+    fetch(url)
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('feature-content').innerHTML = html;
+    })
+    .catch(err => console.error('Error loading feature:', err));
+}
+</script>
+{% endblock %}

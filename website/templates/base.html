@@ -8,9 +8,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex flex-col min-h-screen">
+    
     <header> {% include 'components/navbar.html' %} </header>
+    
     {% include 'components/login.html' %}
     {% include 'components/signup.html' %}
+
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li class="text-red-500 mb-2">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 
     <main class="flex-grow">
         {% block content %}
@@ -19,5 +29,6 @@
     </main>
 
     <footer> {% include 'components/footer.html' %} </footer>
+
 </body>
 </html>
