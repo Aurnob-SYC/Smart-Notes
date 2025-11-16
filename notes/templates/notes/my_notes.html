@@ -1,1 +1,16 @@
-<h1>My notes are HERE -_-_--_---</h1>
+<!-- notes/templates/notes/my_notes.html -->
+<h1>My Notes</h1>
+
+{% if notes %}
+    <ul>
+        {% for note in notes %}
+            <li>
+                <h2>{{ note.title }}</h2>
+                <p>{{ note.content }}</p>
+                <small>Last updated: {{ note.updated_at|date:"M d, Y H:i" }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no notes yet.</p>
+{% endif %}

@@ -1,6 +1,39 @@
 <!-- notes/templates/notes/create_notes.html -->
-<h1>Here I am !!!</h1>
-<form>
-  <input type="text" placeholder="New Note">
-  <button type="submit">Save</button>
+<h2>Create a New Note</h2>
+
+<form method="POST" id="create-note-form">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Note title" required><br><br>
+    <textarea name="content" placeholder="Write your note here..." rows="5" required></textarea><br><br>
+    <button type="submit">Save</button>
 </form>
+
+<div id="message"></div>
+
+<script>
+// Attach listener to parent container that exists on page load
+document.getElementById('feature-content').addEventListener('submit', function(event) {
+    const form = event.target;
+    if (form && form.id === 'create-note-form') {
+        event.preventDefault();  // prevent normal POST
+
+        const formData = new FormData(form);
+        const csrftoken = formData.get('csrfmiddlewaretoken');
+
+        fetch("{% url 'create_notes' %}", {
+            method: "POST",
+            headers: { "X-CSRFToken": csrftoken },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('message').innerText = data.message;
+            if (data.success) {
+                form.reset();
+                showFeature('my_notes'); // reload notes list dynamically
+            }
+        })
+        .catch(console.error);
+    }
+});
+</script>

@@ -30,12 +30,13 @@
 </div>
 
 <script>
+// Function to load a feature dynamically
 function showFeature(feature) {
     let url = '';
     if (feature === 'notes') url = "{% url 'notes' %}";
     if (feature === 'my_notes') url = "{% url 'my_notes' %}";
     if (feature === 'create_notes') url = "{% url 'create_notes' %}";
-    
+
     fetch(url)
     .then(response => response.text())
     .then(html => {
@@ -43,5 +44,33 @@ function showFeature(feature) {
     })
     .catch(err => console.error('Error loading feature:', err));
 }
+
+// Event delegation for dynamically loaded forms
+document.getElementById('feature-content').addEventListener('submit', function(event) {
+    const form = event.target;
+    if (form && form.id === 'create-note-form') {
+        event.preventDefault();  // prevent normal POST
+
+        const formData = new FormData(form);
+        const csrftoken = formData.get('csrfmiddlewaretoken');
+
+        fetch("{% url 'create_notes' %}", {
+            method: "POST",
+            headers: { "X-CSRFToken": csrftoken },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Show success/error message
+            document.getElementById('message').innerText = data.message;
+
+            if (data.success) {
+                form.reset();              // clear form
+                showFeature('my_notes');   // reload notes list dynamically
+            }
+        })
+        .catch(console.error);
+    }
+});
 </script>
 {% endblock %}
