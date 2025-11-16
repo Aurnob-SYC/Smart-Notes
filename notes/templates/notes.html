@@ -1,0 +1,21 @@
+<li>
+    <a href="#" onclick="showFeature('create_notes'); return false;">Create Notes</a>
+    <br>
+    <a href="#" onclick="showFeature('my_notes'); return false;">My Notes</a>
+</li>
+
+
+<script>
+function showFeature(feature) {
+    let url = '';
+    if (feature === 'my_notes') url = "{% url 'my_notes' %}";
+    if (feature === 'create_notes') url = "{% url 'create_notes' %}";
+
+    fetch(url)
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('feature-content').innerHTML = html;
+    })
+    .catch(err => console.error('Error loading feature:', err));
+}
+</script>

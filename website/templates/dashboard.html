@@ -33,7 +33,9 @@
 function showFeature(feature) {
     let url = '';
     if (feature === 'notes') url = "{% url 'notes' %}";
-
+    if (feature === 'my_notes') url = "{% url 'my_notes' %}";
+    if (feature === 'create_notes') url = "{% url 'create_notes' %}";
+    
     fetch(url)
     .then(response => response.text())
     .then(html => {
